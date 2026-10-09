@@ -1,0 +1,390 @@
+/* Checklist de periféricos — Tlog
+ *
+ * Ferramenta operacional interna: a tela é usada para lançamento repetitivo,
+ * não para leitura. O protagonista é a grade. Nada compete com ela: sem
+ * sombras, sem gradiente, sem cartões. A cor só aparece onde carrega
+ * significado (entregue, pendente, foco).
+ *
+ * Tipografia: pilha do sistema, de propósito. É uma aplicação de rede interna
+ * e uma fonte web adicionaria uma requisição externa e um salto de layout no
+ * carregamento, para uma tela que os operadores abrem dezenas de vezes por dia.
+ */
+
+.chk {
+  --papel: #eef1f3;
+  --superficie: #ffffff;
+  --tinta: #16202a;
+  --tinta-fraca: #5f7080;
+  --linha: #d7dee4;
+  --petroleo: #0f6e63;
+  --petroleo-fraco: #e3f0ee;
+  --ambar: #9a5f00;
+  --alarme: #a32c1e;
+
+  min-height: 100vh;
+  padding: 28px 32px 48px;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ---------- topo ---------- */
+
+.chk-topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--linha);
+}
+
+.chk-titulo {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.chk-sub {
+  margin: 4px 0 0;
+  color: var(--tinta-fraca);
+}
+
+.chk-medidor {
+  text-align: right;
+}
+
+.chk-medidor-num {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--petroleo);
+}
+
+.chk-medidor-num span {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.chk-medidor-txt {
+  margin-top: 4px;
+  color: var(--tinta-fraca);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- erro ---------- */
+
+.chk-erro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 11px 14px;
+  border: 1px solid var(--alarme);
+  border-left-width: 3px;
+  border-radius: 3px;
+  background: #fdf3f2;
+  color: var(--alarme);
+}
+
+.chk-erro button {
+  flex-shrink: 0;
+  padding: 5px 11px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---------- estrutura ---------- */
+
+.chk-corpo {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 24px;
+  align-items: start;
+}
+
+/* ---------- trilho de setores ---------- */
+
+.chk-setores {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chk-setor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  padding: 9px 11px;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 0 3px 3px 0;
+  background: transparent;
+  color: var(--tinta-fraca);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chk-setor:hover {
+  background: #e4e9ed;
+}
+
+.chk-setor.esta-ativo {
+  border-left-color: var(--petroleo);
+  background: var(--superficie);
+  color: var(--tinta);
+  font-weight: 550;
+}
+
+.chk-setor-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chk-setor-num {
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.chk-barra {
+  grid-column: 1 / -1;
+  height: 3px;
+  border-radius: 2px;
+  background: #d3dade;
+}
+
+.chk-barra-preenchida {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--petroleo);
+}
+
+/* ---------- painel ---------- */
+
+.chk-painel {
+  border: 1px solid var(--linha);
+  border-radius: 4px;
+  background: var(--superficie);
+  overflow: hidden;
+}
+
+.chk-filtros {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--linha);
+}
+
+.chk-busca {
+  flex: 1 1 260px;
+  max-width: 340px;
+  padding: 7px 11px;
+  border: 1px solid var(--linha);
+  border-radius: 3px;
+  font: inherit;
+  color: inherit;
+}
+
+.chk-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--tinta-fraca);
+  cursor: pointer;
+}
+
+.chk-contagem {
+  margin-left: auto;
+  color: var(--tinta-fraca);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- tabela ---------- */
+
+.chk-rolagem {
+  overflow-x: auto;
+}
+
+.chk-tabela {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.chk-tabela th,
+.chk-tabela td {
+  padding: 0;
+  text-align: left;
+  font-weight: inherit;
+}
+
+.chk-tabela thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--linha);
+  background: var(--superficie);
+  color: var(--tinta-fraca);
+  font-size: 13px;
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.chk-tabela tbody tr:hover td,
+.chk-tabela tbody tr:hover th {
+  background: #f4f7f8;
+}
+
+.chk-tabela tbody tr.esta-completo th.chk-col-nome {
+  border-left-color: var(--petroleo);
+}
+
+/* coluna do nome: fixa na rolagem horizontal */
+.chk-col-nome {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 250px;
+  padding: 10px 14px 10px 13px;
+  border-bottom: 1px solid #e9edf0;
+  border-left: 3px solid transparent;
+  background: var(--superficie);
+}
+
+.chk-tabela thead th.chk-col-nome {
+  z-index: 3;
+  padding-left: 16px;
+}
+
+.chk-pessoa {
+  display: block;
+  font-weight: 550;
+}
+
+.chk-email {
+  display: block;
+  color: var(--tinta-fraca);
+  font-size: 13px;
+}
+
+.chk-tag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 7px;
+  border-radius: 2px;
+  background: #e7ecef;
+  color: var(--tinta-fraca);
+  font-size: 12px;
+}
+
+.chk-col-item {
+  width: 62px;
+  border-bottom: 1px solid #e9edf0;
+  text-align: center;
+}
+
+.chk-tabela thead th.chk-col-item {
+  text-align: center;
+}
+
+.chk-col-item abbr {
+  text-decoration: none;
+  border-bottom: 1px dotted var(--linha);
+  cursor: help;
+}
+
+.chk-caixa {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--petroleo);
+  cursor: pointer;
+}
+
+.chk-caixa:disabled {
+  opacity: 0.4;
+  cursor: progress;
+}
+
+.chk-col-prog {
+  width: 84px;
+  padding-right: 16px;
+  border-bottom: 1px solid #e9edf0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.chk-fracao {
+  color: var(--ambar);
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+}
+
+.esta-completo .chk-fracao {
+  color: var(--petroleo);
+}
+
+.chk-vazio {
+  margin: 0;
+  padding: 40px 16px;
+  color: var(--tinta-fraca);
+  text-align: center;
+}
+
+/* ---------- foco visível ---------- */
+
+.chk button:focus-visible,
+.chk input:focus-visible {
+  outline: 2px solid var(--petroleo);
+  outline-offset: 2px;
+}
+
+/* ---------- telas estreitas ---------- */
+
+@media (max-width: 900px) {
+  .chk {
+    padding: 20px 16px 40px;
+  }
+
+  .chk-corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chk-setores {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .chk-setor {
+    flex: 0 0 auto;
+    min-width: 148px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .chk-setor.esta-ativo {
+    border-left: none;
+    border-bottom-color: var(--petroleo);
+  }
+
+  .chk-col-nome {
+    min-width: 190px;
+  }
+}
