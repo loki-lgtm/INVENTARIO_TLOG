@@ -1,0 +1,319 @@
+/* Menu lateral — Grupo TLOG
+ *
+ * Paleta própria, escura, independente das variáveis do conteúdo (Checklist
+ * e Estoque são claros). O objetivo é contraste: a barra ancora a aplicação,
+ * o conteúdo respira ao lado. Tokens vindos da identidade oficial da marca
+ * (ver src/styles/brand.css e docs/IDENTIDADE-VISUAL.md) — quase monocromática
+ * de propósito, o logo enviado pelo cliente não define cor de destaque.
+ */
+
+.sb {
+  --sb-fundo: var(--tlog-bg);
+  --sb-fundo-alt: var(--tlog-surface-2);
+  --sb-borda: var(--tlog-border);
+  --sb-texto: var(--tlog-text);
+  --sb-texto-fraco: var(--tlog-dim);
+  --sb-destaque: var(--tlog-accent);
+  --sb-destaque-fraco: rgba(180, 180, 187, 0.16);
+
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 248px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid var(--sb-borda);
+  background: var(--sb-fundo);
+  color: var(--sb-texto);
+  font-family: var(--tlog-font);
+  font-size: 14px;
+  transition: width 0.15s ease;
+}
+
+.sb.esta-recolhida {
+  width: 68px;
+}
+
+/* ---------- topo ---------- */
+
+.sb-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--sb-borda);
+}
+
+.sb-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sb-logo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.sb-marca-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.sb-marca-texto strong {
+  overflow: hidden;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sb-marca-texto span {
+  overflow: hidden;
+  color: var(--sb-texto-fraco);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.esta-recolhida .sb-marca-texto {
+  display: none;
+}
+
+.sb-recolher {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--sb-borda);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--sb-texto-fraco);
+  cursor: pointer;
+}
+
+.sb-recolher:hover {
+  border-color: var(--sb-destaque);
+  color: var(--sb-texto);
+}
+
+/* ---------- navegação ---------- */
+
+.sb-nav {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 10px 16px;
+}
+
+.sb-secao-titulo {
+  margin: 16px 0 4px;
+  padding: 0 10px;
+  color: var(--sb-texto-fraco);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.esta-recolhida .sb-secao-titulo {
+  height: 1px;
+  margin: 10px 6px;
+  padding: 0;
+  overflow: hidden;
+  color: transparent;
+  background: var(--sb-borda);
+}
+
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--sb-texto-fraco);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sb-item:hover {
+  background: var(--sb-fundo-alt);
+  color: var(--sb-texto);
+}
+
+.sb-item.esta-ativo {
+  background: var(--sb-destaque-fraco);
+  color: var(--sb-texto);
+  font-weight: 550;
+}
+
+.sb-item-marca {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--sb-fundo-alt);
+  color: var(--sb-texto-fraco);
+  font-family: var(--tlog-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.sb-item.esta-ativo .sb-item-marca {
+  background: var(--sb-destaque);
+  color: var(--sb-fundo);
+}
+
+.sb-item-texto {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.esta-recolhida .sb-item-texto {
+  display: none;
+}
+
+.esta-recolhida .sb-item {
+  justify-content: center;
+  padding: 8px;
+}
+
+/* ---------- grupos expansíveis ---------- */
+
+.sb-grupo-cabeca {
+  position: relative;
+}
+
+.sb-seta {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--sb-texto-fraco);
+  font-size: 15px;
+  transition: transform 0.12s ease;
+}
+
+.sb-seta.esta-aberta {
+  transform: rotate(90deg);
+}
+
+.esta-recolhida .sb-seta {
+  display: none;
+}
+
+.sb-sublista {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 2px 0 4px 14px;
+  padding-left: 10px;
+  border-left: 1px solid var(--sb-borda);
+}
+
+.sb-sublista .sb-item {
+  padding: 6px 10px;
+  font-size: 13.5px;
+}
+
+.sb-sublista .sb-item-marca {
+  width: 18px;
+  height: 18px;
+  font-size: 9px;
+}
+
+/* ---------- rodapé ---------- */
+
+.sb-rodape {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--sb-borda);
+}
+
+.sb-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sb-fundo-alt);
+  border: 1px solid var(--sb-borda);
+  color: var(--sb-texto);
+  font-family: var(--tlog-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sb-rodape-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.sb-rodape-texto strong {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sb-rodape-texto span {
+  overflow: hidden;
+  color: var(--sb-texto-fraco);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.esta-recolhida .sb-rodape-texto {
+  display: none;
+}
+
+.esta-recolhida .sb-rodape {
+  justify-content: center;
+}
+
+/* ---------- foco visível ---------- */
+
+.sb button:focus-visible,
+.sb a:focus-visible {
+  outline: 2px solid var(--sb-destaque);
+  outline-offset: 2px;
+}
+
+/* ---------- rolagem ---------- */
+
+.sb-nav::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sb-nav::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: var(--sb-fundo-alt);
+}

@@ -1,0 +1,27 @@
+/* Identidade visual — Grupo TLOG
+ *
+ * Tokens tirados da identidade oficial enviada pelo cliente (logo em preto e
+ * branco, sem cor de destaque cromática definida — ver docs/IDENTIDADE-VISUAL.md).
+ * Ficam em :root pra qualquer componente usar, sem precisar redefinir a
+ * paleta em cada arquivo. Prefixo "tlog" pra não colidir com os tokens
+ * locais que Checklist/Estoque já tinham antes desta marca existir
+ * (--petroleo, --tinta etc. continuam como estão nesses dois módulos).
+ */
+
+:root {
+  --tlog-bg: #0a0a0b;
+  --tlog-surface: #121214;
+  --tlog-surface-2: #18181b;
+  --tlog-border: #232326;
+  --tlog-border-2: #2e2e33;
+  --tlog-text: #f4f4f5;
+  --tlog-dim: #a1a1aa;
+  --tlog-faint: #6b6b74;
+  --tlog-accent: #b4b4bb;
+  --tlog-accent-2: #8a8a93;
+  --tlog-ink: #0a0a0b;
+  --tlog-paper: #f4f4f2;
+
+  --tlog-font: "Fira Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --tlog-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}

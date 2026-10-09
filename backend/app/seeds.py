@@ -13,6 +13,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.centro_custo import CentroCusto
+from app.models.item_estoque import ItemEstoque
 from app.models.tipo_periferico import TipoPeriferico
 
 PERIFERICOS = [
@@ -36,9 +37,23 @@ CENTROS_CUSTO = [
     # PENDENTE: "CCO Fiscal" — confirmar se é setor próprio ou apelido de Controladoria.
 ]
 
+# Catálogo de itens de estoque vindo do protótipo de design do sistema.
+ITENS_ESTOQUE = [
+    ("Mouse USB", "Periferico", 15),
+    ("Teclado ABNT2", "Periferico", 15),
+    ("Monitor 24 polegadas", "Monitor", 10),
+    ("Notebook Dell 14 polegadas", "Notebook", 5),
+    ("Headset USB", "Periferico", 8),
+    ("Cabo HDMI 1.8m", "Cabo", 20),
+    ("Mousepad", "Periferico", 10),
+    ("Suporte para notebook", "Acessorio", 10),
+    ("Webcam Full HD", "Periferico", 6),
+    ("Estabilizador 300VA", "Energia", 5),
+]
+
 
 def rodar_seed(db: Session) -> dict[str, int]:
-    criados = {"perifericos": 0, "centros_custo": 0}
+    criados = {"perifericos": 0, "centros_custo": 0, "itens_estoque": 0}
 
     for ordem, (nome, slug) in enumerate(PERIFERICOS, start=1):
         existe = db.scalar(select(TipoPeriferico).where(TipoPeriferico.slug == slug))
@@ -51,6 +66,16 @@ def rodar_seed(db: Session) -> dict[str, int]:
         if existe is None:
             db.add(CentroCusto(nome=nome, ativo=True))
             criados["centros_custo"] += 1
+
+    for nome, categoria, alerta_minimo in ITENS_ESTOQUE:
+        existe = db.scalar(select(ItemEstoque).where(ItemEstoque.nome == nome))
+        if existe is None:
+            db.add(
+                ItemEstoque(
+                    nome=nome, categoria=categoria, alerta_minimo=alerta_minimo, ativo=True
+                )
+            )
+            criados["itens_estoque"] += 1
 
     db.commit()
     return criados

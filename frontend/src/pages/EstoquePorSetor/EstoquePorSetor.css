@@ -1,17 +1,13 @@
-/* Checklist de periféricos — Tlog
+/* Estoque por setor — Grupo TLOG
  *
- * Ferramenta operacional interna: a tela é usada para lançamento repetitivo,
- * não para leitura. O protagonista é a grade. Nada compete com ela: sem
- * sombras, sem gradiente, sem cartões. A cor só aparece onde carrega
- * significado (entregue, pendente, foco).
- *
- * Tipografia: Fira Sans, a fonte da identidade da marca (ver
- * src/styles/brand.css) — já é carregada globalmente pelo Sidebar, então
- * herdar aqui não soma requisição nova. Cores e layout continuam como
- * estavam: essa grade já foi validada com quem usa a tela todo dia.
+ * Mesma lógica do Checklist: tela de lançamento repetitivo, não de leitura.
+ * A grade é o protagonista — sem sombra, sem cartão, sem gradiente. A cor
+ * só entra onde carrega significado (estado do equipamento, abaixo do
+ * mínimo, foco). Tipografia Fira Sans, da identidade da marca — sem custo
+ * extra de rede, já é carregada globalmente pelo Sidebar.
  */
 
-.chk {
+.est {
   --papel: #eef1f3;
   --superficie: #ffffff;
   --tinta: #16202a;
@@ -21,6 +17,7 @@
   --petroleo-fraco: #e3f0ee;
   --ambar: #9a5f00;
   --alarme: #a32c1e;
+  --alarme-fraco: #fdf3f2;
 
   min-height: 100vh;
   padding: 28px 32px 48px;
@@ -33,7 +30,7 @@
 
 /* ---------- topo ---------- */
 
-.chk-topo {
+.est-topo {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -42,36 +39,31 @@
   border-bottom: 1px solid var(--linha);
 }
 
-.chk-titulo {
+.est-titulo {
   margin: 0;
   font-size: 25px;
   font-weight: 600;
   letter-spacing: -0.015em;
 }
 
-.chk-sub {
+.est-sub {
   margin: 4px 0 0;
   color: var(--tinta-fraca);
 }
 
-.chk-medidor {
+.est-medidor {
   text-align: right;
 }
 
-.chk-medidor-num {
+.est-medidor-num {
   font-size: 34px;
   font-weight: 600;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  color: var(--petroleo);
+  color: var(--alarme);
 }
 
-.chk-medidor-num span {
-  font-size: 17px;
-  font-weight: 500;
-}
-
-.chk-medidor-txt {
+.est-medidor-txt {
   margin-top: 4px;
   color: var(--tinta-fraca);
   font-variant-numeric: tabular-nums;
@@ -79,7 +71,7 @@
 
 /* ---------- erro ---------- */
 
-.chk-erro {
+.est-erro {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -89,11 +81,11 @@
   border: 1px solid var(--alarme);
   border-left-width: 3px;
   border-radius: 3px;
-  background: #fdf3f2;
+  background: var(--alarme-fraco);
   color: var(--alarme);
 }
 
-.chk-erro button {
+.est-erro button {
   flex-shrink: 0;
   padding: 5px 11px;
   border: 1px solid currentColor;
@@ -106,7 +98,7 @@
 
 /* ---------- estrutura ---------- */
 
-.chk-corpo {
+.est-corpo {
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr);
   gap: 28px;
@@ -116,13 +108,13 @@
 
 /* ---------- trilho de setores ---------- */
 
-.chk-setores {
+.est-setores {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.chk-setor {
+.est-setor {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 4px 10px;
@@ -137,52 +129,50 @@
   cursor: pointer;
 }
 
-.chk-setor:hover {
+.est-setor:hover {
   background: #e4e9ed;
 }
 
-.chk-setor.esta-ativo {
+.est-setor.esta-ativo {
   border-left-color: var(--petroleo);
   background: var(--superficie);
   color: var(--tinta);
   font-weight: 550;
 }
 
-.chk-setor-nome {
+.est-setor-nome {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.chk-setor-num {
+.est-setor-num {
   font-variant-numeric: tabular-nums;
   font-size: 13px;
 }
 
-.chk-barra {
+.est-setor-defeito {
   grid-column: 1 / -1;
-  height: 3px;
-  border-radius: 2px;
-  background: #d3dade;
+  color: var(--alarme);
+  font-size: 12px;
+  font-weight: 550;
 }
 
-.chk-barra-preenchida {
-  display: block;
-  height: 100%;
-  border-radius: 2px;
-  background: var(--petroleo);
+.est-setores-vazio {
+  margin: 8px 11px;
+  color: var(--tinta-fraca);
 }
 
 /* ---------- painel ---------- */
 
-.chk-painel {
+.est-painel {
   border: 1px solid var(--linha);
   border-radius: 4px;
   background: var(--superficie);
   overflow: hidden;
 }
 
-.chk-filtros {
+.est-filtros {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -190,25 +180,11 @@
   border-bottom: 1px solid var(--linha);
 }
 
-.chk-busca {
-  flex: 1 1 260px;
-  max-width: 340px;
-  padding: 7px 11px;
-  border: 1px solid var(--linha);
-  border-radius: 3px;
-  font: inherit;
-  color: inherit;
+.est-setor-atual {
+  font-weight: 550;
 }
 
-.chk-toggle {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--tinta-fraca);
-  cursor: pointer;
-}
-
-.chk-contagem {
+.est-contagem {
   margin-left: auto;
   color: var(--tinta-fraca);
   font-variant-numeric: tabular-nums;
@@ -216,24 +192,24 @@
 
 /* ---------- tabela ---------- */
 
-.chk-rolagem {
+.est-rolagem {
   overflow-x: auto;
 }
 
-.chk-tabela {
+.est-tabela {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.chk-tabela th,
-.chk-tabela td {
+.est-tabela th,
+.est-tabela td {
   padding: 0;
   text-align: left;
   font-weight: inherit;
 }
 
-.chk-tabela thead th {
+.est-tabela thead th {
   position: sticky;
   top: 0;
   z-index: 2;
@@ -246,101 +222,131 @@
   white-space: nowrap;
 }
 
-.chk-tabela tbody tr:hover td,
-.chk-tabela tbody tr:hover th {
+.est-tabela tbody tr:hover td,
+.est-tabela tbody tr:hover th {
   background: #f4f7f8;
 }
 
-.chk-tabela tbody tr.esta-completo th.chk-col-nome {
-  border-left-color: var(--petroleo);
+.est-tabela tbody tr.esta-abaixo th.est-col-nome {
+  border-left-color: var(--alarme);
 }
 
 /* coluna do nome: fixa na rolagem horizontal */
-.chk-col-nome {
+.est-col-nome {
   position: sticky;
   left: 0;
   z-index: 1;
-  min-width: 250px;
+  min-width: 220px;
   padding: 10px 14px 10px 13px;
   border-bottom: 1px solid #e9edf0;
   border-left: 3px solid transparent;
   background: var(--superficie);
 }
 
-.chk-tabela thead th.chk-col-nome {
+.est-tabela thead th.est-col-nome {
   z-index: 3;
   padding-left: 16px;
 }
 
-.chk-pessoa {
+.est-item-nome {
   display: block;
   font-weight: 550;
 }
 
-.chk-email {
+.est-item-categoria {
   display: block;
   color: var(--tinta-fraca);
   font-size: 13px;
 }
 
-.chk-tag {
-  display: inline-block;
-  margin-top: 4px;
-  padding: 1px 7px;
-  border-radius: 2px;
-  background: #e7ecef;
-  color: var(--tinta-fraca);
-  font-size: 12px;
-}
-
-.chk-col-item {
-  width: 62px;
+.est-col-estado {
+  width: 96px;
+  padding: 7px 10px;
   border-bottom: 1px solid #e9edf0;
   text-align: center;
 }
 
-.chk-tabela thead th.chk-col-item {
+.est-tabela thead th.est-col-estado {
   text-align: center;
 }
 
-.chk-col-item abbr {
-  text-decoration: none;
-  border-bottom: 1px dotted var(--linha);
-  cursor: help;
+.est-tabela thead th.est-col-novo {
+  color: var(--petroleo);
 }
 
-.chk-caixa {
-  width: 17px;
-  height: 17px;
+.est-tabela thead th.est-col-usado {
+  color: var(--ambar);
+}
+
+.est-tabela thead th.est-col-defeituoso {
+  color: var(--alarme);
+}
+
+.est-input {
+  width: 100%;
+  max-width: 72px;
+  padding: 6px 8px;
+  border: 1px solid var(--linha);
+  border-radius: 3px;
+  background: var(--superficie);
+  color: inherit;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.est-input::-webkit-outer-spin-button,
+.est-input::-webkit-inner-spin-button {
   margin: 0;
-  accent-color: var(--petroleo);
-  cursor: pointer;
+  -webkit-appearance: none;
 }
 
-.chk-caixa:disabled {
-  opacity: 0.4;
+.est-input:hover {
+  border-color: #b9c4cc;
+}
+
+.est-input:focus {
+  outline: none;
+  border-color: var(--petroleo);
+  box-shadow: 0 0 0 2px var(--petroleo-fraco);
+}
+
+.est-input:disabled {
+  opacity: 0.5;
   cursor: progress;
 }
 
-.chk-col-prog {
-  width: 84px;
+.est-col-total {
+  width: 128px;
   padding-right: 16px;
   border-bottom: 1px solid #e9edf0;
   text-align: right;
   white-space: nowrap;
 }
 
-.chk-fracao {
-  color: var(--ambar);
+.est-total {
+  color: var(--tinta);
   font-variant-numeric: tabular-nums;
   font-weight: 550;
 }
 
-.esta-completo .chk-fracao {
-  color: var(--petroleo);
+.est-minimo {
+  color: var(--tinta-fraca);
+  font-size: 12px;
+  font-weight: 400;
 }
 
-.chk-vazio {
+.esta-abaixo .est-total {
+  color: var(--alarme);
+}
+
+.esta-abaixo .est-minimo {
+  color: var(--alarme);
+  opacity: 0.75;
+}
+
+.est-vazio {
   margin: 0;
   padding: 40px 16px;
   color: var(--tinta-fraca);
@@ -349,8 +355,7 @@
 
 /* ---------- foco visível ---------- */
 
-.chk button:focus-visible,
-.chk input:focus-visible {
+.est button:focus-visible {
   outline: 2px solid var(--petroleo);
   outline-offset: 2px;
 }
@@ -358,21 +363,21 @@
 /* ---------- telas estreitas ---------- */
 
 @media (max-width: 900px) {
-  .chk {
+  .est {
     padding: 20px 16px 40px;
   }
 
-  .chk-corpo {
+  .est-corpo {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .chk-setores {
+  .est-setores {
     flex-direction: row;
     overflow-x: auto;
     padding-bottom: 4px;
   }
 
-  .chk-setor {
+  .est-setor {
     flex: 0 0 auto;
     min-width: 148px;
     border-left: none;
@@ -380,12 +385,12 @@
     border-radius: 3px 3px 0 0;
   }
 
-  .chk-setor.esta-ativo {
+  .est-setor.esta-ativo {
     border-left: none;
     border-bottom-color: var(--petroleo);
   }
 
-  .chk-col-nome {
+  .est-col-nome {
     min-width: 190px;
   }
 }

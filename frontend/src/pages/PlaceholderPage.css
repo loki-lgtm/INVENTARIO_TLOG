@@ -1,0 +1,29 @@
+.ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px;
+  font-family: var(--tlog-font);
+}
+
+.ph-cartao {
+  max-width: 360px;
+  padding: 36px 32px;
+  border: 1px solid var(--tlog-border-2);
+  border-radius: 6px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.ph-titulo {
+  margin: 0 0 8px;
+  color: var(--tlog-ink);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.ph-texto {
+  margin: 0;
+  color: var(--tlog-faint);
+}

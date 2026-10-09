@@ -1,0 +1,10 @@
+.lay {
+  display: flex;
+  min-height: 100vh;
+  background: #eef1f3;
+}
+
+.lay-conteudo {
+  flex: 1 1 auto;
+  min-width: 0;
+}
